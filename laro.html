@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mga Laro · GMRC</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+            background-color: #fdfaef;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill='none' stroke='%23d9d4c4' stroke-width='0.8'%3E%3Cpath d='M0 0h40v40H0z'/%3E%3Cpath d='M0 10h40M0 20h40M0 30h40M10 0v40M20 0v40M30 0v40'/%3E%3C/g%3E%3C/svg%3E");
+            background-repeat: repeat;
+            color: #1e2b3c; line-height: 1.6;
+        }
+        .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+
+        .page-header {
+            background: #fffdf5;
+            padding: 20px 0;
+            border-bottom: 2px solid #e8e0cc;
+            position: sticky; top: 0; z-index: 10;
+        }
+        .page-header-inner {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 16px;
+        }
+        .back-btn {
+            text-decoration: none; color: #5f9e3e; font-weight: 600;
+            font-size: 1rem; transition: 0.2s;
+        }
+        .back-btn:hover { color: #3e7a22; transform: translateX(-3px); }
+
+        .game-hero {
+            background: #d4edc8;
+            border-radius: 32px; padding: 36px 32px; margin: 32px 0 32px;
+            text-align: center;
+            border: 3px solid #a8d99e;
+        }
+        .game-hero .badge {
+            display: inline-block; background: #5f9e3e; color: white;
+            font-weight: 700; font-size: 0.85rem; padding: 6px 18px;
+            border-radius: 40px; margin-bottom: 16px;
+        }
+        .game-hero h1 { font-size: 2.4rem; font-weight: 800; color: #1e2f4a; margin-bottom: 12px; }
+        .game-hero p { color: #3e5670; font-size: 1.05rem; font-weight: 500; }
+
+        .instructions {
+            background: #fff3c4; border-radius: 20px; padding: 24px 28px;
+            margin-bottom: 32px; border: 2px solid #ffdd8a;
+        }
+        .instructions h3 { font-size: 1.15rem; font-weight: 700; color: #8a6a00; margin-bottom: 12px; }
+        .instructions ol { padding-left: 22px; color: #8a6a00; font-weight: 500; }
+        .instructions ol li { margin-bottom: 6px; }
+
+        .score-board {
+            background: #f0f8eb; border-radius: 20px; padding: 20px 28px;
+            margin-bottom: 24px; display: flex; justify-content: space-between;
+            align-items: center;
+            border: 2px solid #a8d99e;
+        }
+        .score-board .label { font-weight: 700; color: #3e7a22; }
+        .score-board .score-value { font-size: 1.8rem; font-weight: 800; color: #5f9e3e; }
+
+        .question-card {
+            background: #fffdf5; border-radius: 24px; padding: 32px;
+            margin-bottom: 24px;
+            border: 2px solid #a8d99e;
+        }
+        .question-card .q-number {
+            display: inline-block; background: #5f9e3e; color: white;
+            font-weight: 700; font-size: 0.85rem; padding: 4px 14px;
+            border-radius: 30px; margin-bottom: 14px;
+        }
+        .question-card .q-topic {
+            display: inline-block; background: #3a7bd5; color: white;
+            font-weight: 700; font-size: 0.8rem; padding: 4px 14px;
+            border-radius: 30px; margin-left: 8px; margin-bottom: 14px;
+        }
+        .question-card h2 { font-size: 1.35rem; font-weight: 700; color: #1e2f4a; margin-bottom: 24px; line-height: 1.4; }
+        .option {
+            display: block; width: 100%; text-align: left;
+            background: #f0f8eb; border: 2px solid #c8e8c0;
+            padding: 16px 22px; border-radius: 16px;
+            font-size: 1rem; font-weight: 500; color: #2f4a6b;
+            margin-bottom: 12px; cursor: pointer;
+            font-family: inherit; transition: 0.15s;
+        }
+        .option:hover:not(:disabled) { background: #d4edc8; border-color: #5f9e3e; transform: translateX(4px); }
+        .option:disabled { cursor: default; }
+        .option.correct { background: #5f9e3e; border-color: #3e7a22; color: white; font-weight: 700; }
+        .option.wrong { background: #e96a8e; border-color: #c04a6e; color: white; font-weight: 700; }
+        .option .letter {
+            display: inline-block; width: 28px; height: 28px;
+            background: #fffdf5; border-radius: 50%; text-align: center;
+            line-height: 28px; font-weight: 700; margin-right: 12px;
+            color: #5f9e3e; border: 2px solid #5f9e3e;
+        }
+        .option.correct .letter { background: white; color: #5f9e3e; }
+        .option.wrong .letter { background: white; color: #e96a8e; border-color: #e96a8e; }
+
+        .feedback { margin-top: 20px; padding: 16px 22px; border-radius: 14px; font-weight: 500; display: none; }
+        .feedback.show { display: block; }
+        .feedback.correct-fb { background: #5f9e3e; color: white; }
+        .feedback.wrong-fb { background: #e96a8e; color: white; }
+
+        .next-btn {
+            display: none; background: #5f9e3e; color: white;
+            font-weight: 700; padding: 14px 40px; border-radius: 50px;
+            border: none; font-size: 1rem; cursor: pointer;
+            margin-top: 20px; font-family: inherit;
+            transition: 0.2s;
+        }
+        .next-btn:hover { background: #4a8530; transform: translateY(-2px); }
+        .next-btn.show { display: inline-block; }
+
+        .result-card {
+            background: #d4edc8; border-radius: 28px; padding: 48px 32px;
+            text-align: center; display: none;
+            border: 3px solid #a8d99e;
+        }
+        .result-card.show { display: block; }
+        .result-card h2 { font-size: 2rem; font-weight: 800; color: #1e2f4a; margin-bottom: 8px; }
+        .result-card .final-score { font-size: 3rem; font-weight: 900; color: #3e7a22; margin: 16px 0; }
+        .result-card p { color: #2f4a6b; font-size: 1.1rem; font-weight: 500; margin-bottom: 24px; }
+        .result-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+        .result-buttons a {
+            padding: 14px 36px; border-radius: 50px; font-weight: 700;
+            font-size: 1rem; text-decoration: none; cursor: pointer;
+            border: none; font-family: inherit; transition: 0.2s;
+        }
+        .btn-home { background: #5f9e3e; color: white; }
+        .btn-home:hover { background: #4a8530; transform: translateY(-2px); }
+
+        /* LOCKED STATE */
+        .locked-card {
+            background: #d4edc8; border-radius: 28px; padding: 48px 32px;
+            text-align: center;
+            border: 3px solid #a8d99e;
+        }
+        .locked-card h2 { font-size: 2rem; font-weight: 800; color: #1e2f4a; margin-bottom: 12px; }
+        .locked-card p { color: #2f4a6b; font-size: 1.05rem; font-weight: 500; margin-bottom: 24px; }
+        .locked-card .score-box {
+            background: #fffdf5;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 2px solid #a8d99e;
+        }
+        .locked-card .score-box .lbl { font-weight: 600; color: #3e7a22; margin-bottom: 8px; }
+        .locked-card .score-box .num { font-size: 2.5rem; font-weight: 900; color: #5f9e3e; }
+        .locked-card .btn-home {
+            display: inline-block; background: #5f9e3e; color: white;
+            font-weight: 700; padding: 14px 40px; border-radius: 50px;
+            text-decoration: none; font-size: 1rem; transition: 0.2s;
+        }
+        .locked-card .btn-home:hover { background: #4a8530; transform: translateY(-2px); }
+
+        @media (max-width: 600px) {
+            .game-hero h1 { font-size: 1.8rem; }
+            .question-card { padding: 24px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-header">
+        <div class="container page-header-inner">
+            <a href="index.html" class="back-btn">Bumalik sa Home</a>
+            <div style="font-weight:800; font-size:1.4rem;">
+                <span style="color:#3a7bd5;">G</span><span style="color:#f5a623;">M</span><span style="color:#5f9e3e;">R</span><span style="color:#7b4b9e;">C</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="game-hero">
+            <div class="badge">MGA LARO</div>
+            <h1>Piliin ang Tamang Asal</h1>
+            <p>Subukin ang iyong kakayahang pumili ng tamang kilos sa iba't ibang sitwasyon!</p>
+        </div>
+
+        <div class="locked-card" id="lockedCard" style="display:none;">
+            <h2>Tapos na ang Laro</h2>
+            <p>Nilaro mo na ang larong ito. Bawal nang ulitin.</p>
+            <div class="score-box">
+                <div class="lbl">Iyong Puntos:</div>
+                <div class="num"><span id="lockedScore">0</span>/5</div>
+            </div>
+            <a href="index.html" class="btn-home">Bumalik sa Home</a>
+        </div>
+
+        <div id="gameView">
+            <div class="instructions" id="instructions">
+                <h3>Mga Panuto</h3>
+                <ol>
+                    <li>Basahin nang mabuti ang bawat sitwasyon.</li>
+                    <li>Piliin ang tamang sagot mula sa apat na pagpipilian.</li>
+                    <li>Makakuha ng isang puntos sa bawat tamang sagot.</li>
+                    <li>Basahin ang feedback pagkatapos sumagot.</li>
+                    <li>Sagutin ang lahat ng limang tanong upang matapos ang laro.</li>
+                    <li><strong>Bawal ulitin ang laro.</strong></li>
+                </ol>
+            </div>
+
+            <div class="score-board" id="scoreBoard">
+                <span class="label">Puntos:</span>
+                <span class="score-value" id="scoreDisplay">0</span>
+            </div>
+
+            <div id="quizArea"></div>
+
+            <div class="result-card" id="resultCard">
+                <h2 id="resultTitle">Tapos na!</h2>
+                <div class="final-score"><span id="finalScore">0</span>/5</div>
+                <p id="resultMessage"></p>
+                <div class="result-buttons">
+                    <a href="index.html" class="btn-home">Bumalik sa Home</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'gmrc_laro_result';
+
+        const questions = [
+            { topic: "Paggalang", question: "Habang nagsasalita ang iyong guro, ano ang dapat mong gawin?",
+              options: ["Makipag-usap sa katabi.", "Makinig nang mabuti.", "Maglaro sa loob ng silid-aralan.", "Sumigaw upang mapansin."],
+              correct: 1, feedback: "Ang pakikinig habang may nagsasalita ay nagpapakita ng paggalang." },
+            { topic: "Katapatan", question: "Nakakita ka ng pitaka sa loob ng silid-aralan. Ano ang dapat mong gawin?",
+              options: ["Itago ito.", "Kunin ang pera sa loob nito.", "Ibigay ito sa guro upang mahanap ang may-ari.", "Iwanan ito sa kung saan."],
+              correct: 2, feedback: "Ang pagsasauli ng nawawalang gamit ay nagpapakita ng katapatan." },
+            { topic: "Kabaitan", question: "May kaklase kang nahihirapang dalhin ang kaniyang mga libro. Ano ang gagawin mo?",
+              options: ["Tawanan siya.", "Tulungan siyang dalhin ang mga libro.", "Iwasan siya.", "Dagdagan ang kaniyang mga dala."],
+              correct: 1, feedback: "Ang pagtulong sa nangangailangan ay nagpapakita ng malasakit." },
+            { topic: "Pananagutan", question: "Pagkatapos mong maglaro, ano ang dapat mong gawin sa iyong mga laruan?",
+              options: ["Iwan ang mga ito sa sahig.", "Ipagawa sa iba ang pagliligpit.", "Itago ang mga ito sa ilalim ng kama.", "Ibalik ang mga ito sa tamang lalagyan."],
+              correct: 3, feedback: "Ang pag-aayos ng sariling gamit ay pagpapakita ng pananagutan." },
+            { topic: "Disiplina", question: "Ano ang dapat mong gawin kapag nakapila sa kantina?",
+              options: ["Sumingit sa unahan.", "Itulak ang nasa harapan.", "Maghintay ng iyong pagkakataon.", "Umalis nang hindi nagpapaalam."],
+              correct: 2, feedback: "Ang pagsunod sa pila ay nagpapakita ng disiplina at paggalang sa iba." }
+        ];
+
+        let currentQ = 0;
+        let score = 0;
+
+        function renderQuestion() {
+            const area = document.getElementById('quizArea');
+            const q = questions[currentQ];
+            const letters = ['A', 'B', 'C', 'D'];
+
+            let html = `
+                <div class="question-card">
+                    <span class="q-number">Tanong ${currentQ + 1} / ${questions.length}</span>
+                    <span class="q-topic">${q.topic}</span>
+                    <h2>${q.question}</h2>
+                    <div id="optionsArea">
+            `;
+
+            q.options.forEach((opt, i) => {
+                html += `<button class="option" onclick="selectAnswer(${i})">
+                            <span class="letter">${letters[i]}</span>${opt}
+                         </button>`;
+            });
+
+            html += `</div>
+                    <div class="feedback" id="feedback"></div>
+                    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+                        ${currentQ === questions.length - 1 ? 'Tapusin' : 'Susunod'}
+                    </button>
+                </div>`;
+
+            area.innerHTML = html;
+        }
+
+        function selectAnswer(selected) {
+            const q = questions[currentQ];
+            const options = document.querySelectorAll('.option');
+            const feedback = document.getElementById('feedback');
+            const nextBtn = document.getElementById('nextBtn');
+
+            options.forEach((opt, i) => {
+                opt.disabled = true;
+                if (i === q.correct) opt.classList.add('correct');
+                else if (i === selected) opt.classList.add('wrong');
+            });
+
+            if (selected === q.correct) {
+                score++;
+                document.getElementById('scoreDisplay').textContent = score;
+                feedback.className = 'feedback show correct-fb';
+                feedback.textContent = 'Tama! ' + q.feedback;
+            } else {
+                feedback.className = 'feedback show wrong-fb';
+                feedback.textContent = 'Mali. ' + q.feedback;
+            }
+
+            nextBtn.classList.add('show');
+        }
+
+        function nextQuestion() {
+            currentQ++;
+            if (currentQ < questions.length) { renderQuestion(); }
+            else { showResult(); }
+        }
+
+        function showResult() {
+            document.getElementById('quizArea').innerHTML = '';
+            document.getElementById('scoreBoard').style.display = 'none';
+            document.getElementById('instructions').style.display = 'none';
+
+            const resultCard = document.getElementById('resultCard');
+            resultCard.classList.add('show');
+            document.getElementById('finalScore').textContent = score;
+
+            let title, msg;
+            if (score === 5) { title = 'Napakahusay!'; msg = 'Naipakita mo ang mahusay na pag-unawa sa mabuting asal.'; }
+            else if (score >= 3) { title = 'Magaling!'; msg = 'Ipagpatuloy ang pag-aaral tungkol sa GMRC.'; }
+            else { title = 'Huwag Sumuko!'; msg = 'Balikan ang mga aralin at subukan muli.'; }
+
+            document.getElementById('resultTitle').textContent = title;
+            document.getElementById('resultMessage').textContent = msg;
+
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                score: score,
+                date: new Date().toISOString()
+            }));
+        }
+
+        function checkLock() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                const data = JSON.parse(saved);
+                document.getElementById('gameView').style.display = 'none';
+                document.getElementById('lockedCard').style.display = 'block';
+                document.getElementById('lockedScore').textContent = data.score;
+                return true;
+            }
+            return false;
+        }
+
+        if (!checkLock()) {
+            renderQuestion();
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mga Gawain · GMRC</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+            background-color: #fdfaef;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill='none' stroke='%23d9d4c4' stroke-width='0.8'%3E%3Cpath d='M0 0h40v40H0z'/%3E%3Cpath d='M0 10h40M0 20h40M0 30h40M10 0v40M20 0v40M30 0v40'/%3E%3C/g%3E%3C/svg%3E");
+            background-repeat: repeat;
+            color: #1e2b3c; line-height: 1.7;
+        }
+        .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+
+        .page-header {
+            background: #fffdf5;
+            padding: 20px 0;
+            border-bottom: 2px solid #e8e0cc;
+            position: sticky; top: 0; z-index: 10;
+        }
+        .page-header-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+        .back-btn { text-decoration: none; color: #e96a8e; font-weight: 600; font-size: 1rem; transition: 0.2s; }
+        .back-btn:hover { color: #c04a6e; transform: translateX(-3px); }
+
+        .activity-hero {
+            background: #ffd0de;
+            border-radius: 32px; padding: 36px 32px; margin: 32px 0 32px;
+            text-align: center;
+            border: 3px solid #ffb8cd;
+        }
+        .activity-hero .badge {
+            display: inline-block; background: #e96a8e; color: white;
+            font-weight: 700; font-size: 0.85rem; padding: 6px 18px;
+            border-radius: 40px; margin-bottom: 16px;
+        }
+        .activity-hero h1 { font-size: 2.4rem; font-weight: 800; color: #1e2f4a; margin-bottom: 12px; }
+        .activity-hero p { color: #3e5670; font-size: 1.05rem; font-weight: 500; }
+
+        .content-card {
+            background: #fffdf5; border-radius: 24px; padding: 32px 36px;
+            margin-bottom: 24px; border: 2px solid #ffb8cd;
+        }
+        .content-card h2 {
+            font-size: 1.5rem; font-weight: 800; color: #1e2f4a;
+            margin-bottom: 16px;
+        }
+        .content-card h2 .icon {
+            background: #e96a8e; padding: 6px 14px; border-radius: 12px;
+            font-size: 1rem; color: white; font-weight: 800; margin-right: 10px;
+        }
+        .content-card p { color: #2f4a6b; margin-bottom: 14px; font-size: 1.02rem; }
+        .content-card ul { list-style: none; padding-left: 0; margin: 14px 0; }
+        .content-card ul li { padding: 10px 0 10px 32px; position: relative; color: #2f4a6b; }
+        .content-card ul li::before { content: ''; position: absolute; left: 6px; top: 18px; width: 8px; height: 8px; background: #e96a8e; border-radius: 50%; }
+
+        .mission-box {
+            background: #fff3f6; border-radius: 20px; padding: 28px 32px;
+            margin: 24px 0; border: 2px solid #ffb8cd;
+            position: relative;
+        }
+        .mission-box::before {
+            content: 'MISYON';
+            position: absolute;
+            top: -12px; left: 28px;
+            background: #e96a8e; color: white;
+            font-size: 0.72rem; font-weight: 800;
+            letter-spacing: 1px;
+            padding: 3px 12px;
+            border-radius: 20px;
+        }
+        .mission-box h3 { font-size: 1.3rem; font-weight: 800; color: #8a2942; margin-bottom: 12px; margin-top: 6px; }
+        .mission-box ol { padding-left: 22px; color: #5a1f33; font-weight: 500; }
+        .mission-box ol li { margin-bottom: 8px; }
+
+        .form-group { margin-bottom: 24px; }
+        .form-group label { display: block; font-weight: 700; color: #1e2f4a; margin-bottom: 10px; font-size: 1.05rem; }
+        .form-group textarea {
+            width: 100%; padding: 14px 18px; border-radius: 14px;
+            border: 2px solid #ffb8cd; font-family: inherit;
+            font-size: 1rem; color: #1e2f4a; background: #fff3f6;
+            transition: 0.2s;
+        }
+        .form-group textarea:focus {
+            outline: none; border-color: #e96a8e;
+            background: #fffdf5; box-shadow: 0 0 0 4px rgba(233,106,142,0.15);
+        }
+        .form-group textarea { min-height: 100px; resize: vertical; }
+
+        .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-top: 8px; }
+        .value-option { position: relative; cursor: pointer; }
+        .value-option input { position: absolute; opacity: 0; }
+        .value-option .value-label {
+            display: block; text-align: center; padding: 14px 10px;
+            border-radius: 14px; background: #fff3f6;
+            border: 2px solid #ffb8cd; font-weight: 600;
+            color: #4a2a3e; transition: 0.2s; font-size: 0.95rem;
+        }
+        .value-option input:checked + .value-label { background: #e96a8e; color: white; border-color: #e96a8e; }
+        .value-option .value-label:hover { border-color: #e96a8e; }
+
+        .submit-btn {
+            display: block; width: 100%; text-align: center;
+            background: #e96a8e; color: white; font-weight: 700;
+            padding: 18px; border-radius: 50px; border: none;
+            font-size: 1.1rem; cursor: pointer; font-family: inherit;
+            transition: 0.2s; margin-top: 8px;
+            border: 2px solid #e96a8e;
+        }
+        .submit-btn:hover { background: #c04a6e; transform: translateY(-2px); }
+
+        .completion-card {
+            background: #ffd0de; border-radius: 28px; padding: 48px 32px;
+            text-align: center; display: none;
+            border: 3px solid #ffb8cd;
+        }
+        .completion-card.show { display: block; }
+        .completion-card h2 { font-size: 2rem; font-weight: 800; color: #1e2f4a; margin-bottom: 16px; }
+        .completion-card > p { color: #2f4a6b; font-size: 1.1rem; font-weight: 500; margin-bottom: 24px; }
+        .completion-card .btn-home {
+            display: inline-block; background: #e96a8e; color: white;
+            font-weight: 700; padding: 14px 40px; border-radius: 50px;
+            text-decoration: none; font-size: 1rem; transition: 0.2s;
+        }
+        .completion-card .btn-home:hover { background: #c04a6e; transform: translateY(-2px); }
+
+        .answer-summary {
+            text-align: left; background: #fffdf5; border-radius: 20px;
+            padding: 24px; margin: 24px 0; border: 2px solid #ffb8cd;
+        }
+        .answer-summary h3 {
+            font-size: 1.2rem; font-weight: 800; color: #c04a6e;
+            margin-bottom: 18px; padding-bottom: 12px;
+            border-bottom: 2px solid #ffb8cd;
+        }
+        .answer-item { margin-bottom: 20px; }
+        .answer-item:last-child { margin-bottom: 0; }
+        .answer-item .q-label {
+            font-weight: 700; color: #4a2a3e; font-size: 0.95rem;
+            margin-bottom: 6px; display: block;
+        }
+        .answer-item .a-value {
+            background: #fff3f6; padding: 12px 16px; border-radius: 12px;
+            border: 1px solid #ffb8cd; border-left: 4px solid #e96a8e;
+            color: #2f4a6b;
+            font-size: 0.95rem; line-height: 1.5; word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        /* LOCKED STATE */
+        .locked-card {
+            background: #ffd0de; border-radius: 28px; padding: 48px 32px;
+            text-align: center;
+            border: 3px solid #ffb8cd;
+        }
+        .locked-card h2 { font-size: 2rem; font-weight: 800; color: #1e2f4a; margin-bottom: 12px; }
+        .locked-card p { color: #2f4a6b; font-size: 1.05rem; font-weight: 500; margin-bottom: 24px; }
+        .locked-card .btn-home {
+            display: inline-block; background: #e96a8e; color: white;
+            font-weight: 700; padding: 14px 40px; border-radius: 50px;
+            text-decoration: none; font-size: 1rem; transition: 0.2s;
+        }
+        .locked-card .btn-home:hover { background: #c04a6e; transform: translateY(-2px); }
+
+        @media (max-width: 600px) {
+            .activity-hero h1 { font-size: 1.8rem; }
+            .content-card { padding: 24px 20px; }
+            .completion-card { padding: 32px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-header">
+        <div class="container page-header-inner">
+            <a href="index.html" class="back-btn">Bumalik sa Home</a>
+            <div style="font-weight:800; font-size:1.4rem;">
+                <span style="color:#3a7bd5;">G</span><span style="color:#f5a623;">M</span><span style="color:#5f9e3e;">R</span><span style="color:#7b4b9e;">C</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="activity-hero">
+            <div class="badge">MGA GAWAIN</div>
+            <h1>Ang Aking Mabuting Gawa</h1>
+            <p>Isabuhay ang mabuting asal sa pamamagitan ng pagtulong sa pamilya!</p>
+        </div>
+
+        <div class="locked-card" id="lockedCard" style="display:none;">
+            <h2>Tapos na ang Gawain</h2>
+            <p>Naisumite mo na ang gawaing ito. Bawal nang ulitin.</p>
+            <div id="lockedSummary"></div>
+            <a href="index.html" class="btn-home">Bumalik sa Home</a>
+        </div>
+
+        <div id="activityView">
+
+            <div class="content-card">
+                <h2><span class="icon">A</span> Panimula</h2>
+                <p>Ang mabuting asal ay hindi lamang natututuhan sa pamamagitan ng pagbabasa at pagsagot sa mga tanong. Mahalaga ring isagawa ito sa pang-araw-araw na buhay.</p>
+                <p>Sa gawaing ito, magkakaroon ka ng pagkakataong maipakita ang pagiging matulungin at responsable sa pamamagitan ng pagtulong sa iyong pamilya.</p>
+            </div>
+
+            <div class="content-card">
+                <h2><span class="icon">B</span> Layunin ng Gawain</h2>
+                <p>Pagkatapos ng aktibidad, ang mga mag-aaral ay inaasahang:</p>
+                <ul>
+                    <li>Makapagsagawa ng isang simpleng gawaing nagpapakita ng kabaitan.</li>
+                    <li>Maipaliwanag ang kahalagahan ng pagtulong sa pamilya.</li>
+                    <li>Makapagnilay tungkol sa kanilang ginawa at natutuhan.</li>
+                </ul>
+            </div>
+
+            <div class="mission-box">
+                <h3>Ang Iyong Misyon: Tumulong sa Bahay!</h3>
+                <ol>
+                    <li>Pumili ng isang gawaing-bahay na angkop sa iyong edad, tulad ng pag-aayos ng mga libro, pagliligpit ng mga laruan, o pag-aayos ng sariling higaan.</li>
+                    <li>Gawin ito nang maayos at ligtas.</li>
+                    <li>Pagkatapos, sagutan ang reflection form sa ibaba.</li>
+                    <li>I-click ang <strong>Ipasa ang Gawain</strong> upang markahan ang aktibidad bilang kumpleto.</li>
+                </ol>
+            </div>
+
+            <div class="content-card" id="formCard">
+                <h2><span class="icon">D</span> Reflection Form</h2>
+
+                <form id="reflectionForm" onsubmit="submitForm(event)">
+
+                    <div class="form-group">
+                        <label>1. Anong gawaing-bahay ang ginawa mo?</label>
+                        <textarea id="ans1" placeholder="Isulat ang iyong sagot dito..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>2. Bakit mo piniling gawin ang gawaing ito?</label>
+                        <textarea id="ans2" placeholder="Isulat ang iyong sagot dito..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>3. Anong pagpapahalaga ang ipinakita mo sa gawaing ito?</label>
+                        <div class="values-grid">
+                            <label class="value-option">
+                                <input type="radio" name="value" value="Paggalang" required>
+                                <span class="value-label">Paggalang</span>
+                            </label>
+                            <label class="value-option">
+                                <input type="radio" name="value" value="Katapatan">
+                                <span class="value-label">Katapatan</span>
+                            </label>
+                            <label class="value-option">
+                                <input type="radio" name="value" value="Kabaitan">
+                                <span class="value-label">Kabaitan</span>
+                            </label>
+                            <label class="value-option">
+                                <input type="radio" name="value" value="Pananagutan">
+                                <span class="value-label">Pananagutan</span>
+                            </label>
+                            <label class="value-option">
+                                <input type="radio" name="value" value="Disiplina">
+                                <span class="value-label">Disiplina</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>4. Ano ang natutuhan mo mula sa iyong ginawa?</label>
+                        <textarea id="ans4" placeholder="Isulat ang iyong sagot dito..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Ipasa ang Gawain</button>
+
+                </form>
+            </div>
+
+            <div class="completion-card" id="completionCard">
+                <h2>Mahusay!</h2>
+                <p>Natapos mo na ang iyong Good Deed Activity. Tandaan na ang pagtulong sa pamilya ay isang paraan ng pagpapakita ng pagmamahal, malasakit, at pananagutan.</p>
+
+                <div id="summaryContent"></div>
+
+                <a href="index.html" class="btn-home">Bumalik sa Home</a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'gmrc_gawain_result';
+
+        function buildSummaryHtml(data) {
+            return `
+                <div class="answer-summary">
+                    <h3>Ang Iyong mga Sagot</h3>
+                    <div class="answer-item">
+                        <span class="q-label">1. Anong gawaing-bahay ang ginawa mo?</span>
+                        <div class="a-value">${escapeHtml(data.ans1)}</div>
+                    </div>
+                    <div class="answer-item">
+                        <span class="q-label">2. Bakit mo piniling gawin ang gawaing ito?</span>
+                        <div class="a-value">${escapeHtml(data.ans2)}</div>
+                    </div>
+                    <div class="answer-item">
+                        <span class="q-label">3. Anong pagpapahalaga ang ipinakita mo sa gawaing ito?</span>
+                        <div class="a-value">${escapeHtml(data.value)}</div>
+                    </div>
+                    <div class="answer-item">
+                        <span class="q-label">4. Ano ang natutuhan mo mula sa iyong ginawa?</span>
+                        <div class="a-value">${escapeHtml(data.ans4)}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function submitForm(e) {
+            e.preventDefault();
+
+            const data = {
+                ans1: document.getElementById('ans1').value.trim(),
+                ans2: document.getElementById('ans2').value.trim(),
+                value: document.querySelector('input[name="value"]:checked').value,
+                ans4: document.getElementById('ans4').value.trim(),
+                date: new Date().toISOString()
+            };
+
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+
+            document.getElementById('summaryContent').innerHTML = buildSummaryHtml(data);
+            document.getElementById('formCard').style.display = 'none';
+            document.getElementById('completionCard').classList.add('show');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function checkLock() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                const data = JSON.parse(saved);
+                document.getElementById('activityView').style.display = 'none';
+                document.getElementById('lockedCard').style.display = 'block';
+                document.getElementById('lockedSummary').innerHTML = buildSummaryHtml(data);
+                return true;
+            }
+            return false;
+        }
+
+        checkLock();
+    </script>
+
+</body>
+</html>

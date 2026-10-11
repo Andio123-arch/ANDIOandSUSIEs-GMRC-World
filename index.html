@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GMRC · Matuto, Gawin, Maging Mabuti</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+            background-color: #fdfaef;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill='none' stroke='%23d9d4c4' stroke-width='0.8'%3E%3Cpath d='M0 0h40v40H0z'/%3E%3Cpath d='M0 10h40M0 20h40M0 30h40M10 0v40M20 0v40M30 0v40'/%3E%3C/g%3E%3C/svg%3E");
+            background-repeat: repeat;
+            color: #1e2b3c; line-height: 1.5;
+            min-height: 100vh; display: flex; flex-direction: column;
+        }
+        .container { 
+        max-width: 1200px; 
+        margin: 0 auto; 
+        padding: 0 24px; }
+
+        .top-bar {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 16px; padding: 24px 0;
+        }
+        .logo-area { display: flex; flex-direction: column; gap: 2px; }
+        .logo-main {
+            font-size: 2.8rem; font-weight: 800; letter-spacing: -0.02em;
+            line-height: 1; display: flex; align-items: center; gap: 4px;
+        }
+        .logo-main .g { color: #3a7bd5; }
+        .logo-main .m { color: #f5a623; }
+        .logo-main .r { color: #e94e77; }
+        .logo-main .c { color: #7b4b9e; }
+        .tagline {
+            font-size: 0.85rem; font-weight: 500; color: #2c3e50;
+            letter-spacing: 0.4px; padding-left: 2px;
+        }
+
+        .hero {
+            background: #e7f2ff;
+            border-radius: 0 0 60px 60px; padding: 40px 0 60px;
+            margin-bottom: 48px;
+            border-bottom: 3px solid #c9e2ff;
+        }
+        .hero-inner { display: flex; align-items: center; gap: 40px; flex-wrap: wrap; }
+        .hero-text { flex: 1 1 400px; }
+        .hero-text .welcome {
+            font-weight: 600; color: #2d3e5c; font-size: 1.2rem; margin-bottom: 12px;
+        }
+        .hero-text h1 {
+            font-size: 3.2rem; font-weight: 800; line-height: 1.2;
+            letter-spacing: -0.01em; margin-bottom: 20px;
+        }
+        .hero-text h1 .line1 { color: #3a7bd5; display: block; }
+        .hero-text h1 .line2 { color: #f5a623; display: block; }
+        .hero-text h1 .line3 { color: #6a9e3e; display: block; }
+        .hero-sub {
+            font-size: 1.25rem; color: #2f4a6b; margin-bottom: 32px;
+            max-width: 550px; font-weight: 500;
+        }
+        .btn-primary {
+            background: #6a4c9c; color: white; font-weight: 700;
+            padding: 14px 40px; border-radius: 50px; text-decoration: none;
+            font-size: 1.1rem;
+            display: inline-flex; align-items: center; gap: 10px;
+            transition: 0.2s ease; border: 2px solid #6a4c9c; cursor: pointer;
+        }
+        .btn-primary:hover { background: #5a3d85; transform: translateY(-2px); }
+        .hero-image { flex: 1 1 380px; display: flex; justify-content: center; align-items: center; }
+        .hero-image img { max-width: 100%; height: auto; display: block; }
+
+        .section { padding: 30px 0 50px; }
+        .section-header { text-align: center; margin-bottom: 48px; }
+        .section-header h2 {
+            font-size: 2.4rem; font-weight: 800; color: #1e2f4a;
+            display: inline-flex; align-items: center; gap: 12px;
+            flex-wrap: wrap; justify-content: center;
+        }
+        .section-header h2 .spark {
+            width: 12px; height: 12px;
+            background: #f5a623;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .section-header p {
+            font-size: 1.2rem; color: #4a627a; margin-top: 8px; font-weight: 500;
+        }
+
+        .card-grid {
+            display: flex; flex-direction: row; flex-wrap: wrap;
+            justify-content: center; gap: 24px;
+        }
+        .card {
+            flex: 1 1 240px; max-width: 280px; border-radius: 32px;
+            padding: 32px 20px 28px; display: flex; flex-direction: column;
+            align-items: center; text-align: center;
+            box-shadow: 0 12px 24px -12px rgba(0, 20, 40, 0.1);
+            transition: 0.2s ease; border: 1px solid rgba(255, 255, 255, 0.6);
+            text-decoration: none; color: inherit;
+        }
+        .card:hover { transform: translateY(-6px); box-shadow: 0 24px 32px -12px rgba(30, 60, 100, 0.2); }
+        .card-icon-img {
+            width: 90px; height: 90px; margin-bottom: 20px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .card-icon-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .card h3 { font-size: 1.5rem; font-weight: 700; color: #1e2f4a; margin-bottom: 8px; }
+        .card p {
+            font-size: 0.95rem; color: #3e5670; margin-bottom: 24px;
+            flex: 1; font-weight: 500; padding: 0 6px;
+        }
+        .card-btn {
+            border: none; background: #3a7bd5; color: white;
+            font-weight: 700; padding: 12px 32px; border-radius: 40px;
+            font-size: 0.95rem; width: fit-content; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 8px;
+            font-family: inherit; transition: 0.1s ease;
+            text-decoration: none;
+        }
+        .card-btn.green { background: #5f9e3e; }
+        .card-btn.purple { background: #7b5aa6; }
+        .card-btn.pink { background: #e96a8e; }
+
+        .topics-grid {
+            display: flex; flex-direction: row; flex-wrap: wrap;
+            justify-content: center; gap: 24px;
+        }
+        .topic-card {
+            flex: 1 1 200px; max-width: 240px; border-radius: 28px;
+            padding: 28px 16px 24px; display: flex; flex-direction: column;
+            align-items: center; text-align: center; transition: 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 16px -8px rgba(0, 20, 40, 0.08);
+        }
+        .topic-card:hover { transform: translateY(-4px); box-shadow: 0 16px 24px -12px rgba(30, 60, 100, 0.15); }
+        .topic-icon {
+            width: 80px; height: 80px; margin-bottom: 16px;
+            display: flex; align-items: center; justify-content: center; font-size: 3rem;
+        }
+        .topic-icon img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .topic-card h4 { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; }
+        .topic-card p { font-size: 0.9rem; color: #3e5670; font-weight: 500; line-height: 1.5; }
+
+        .card-aralin { background: #e2f0ff; }
+        .card-laro { background: #e4f5e0; }
+        .card-quiz { background: #f0e6fa; }
+        .card-gawain { background: #ffe6ee; }
+        .topic-sarili { background: #ffe6f0; }
+        .topic-pamilya { background: #e2f0ff; }
+        .topic-paaralan { background: #e4f5e0; }
+        .topic-bansa { background: #fff3d6; }
+
+
+        .footer-wave {
+            background: #6a4c9c; color: white; padding: 48px 0 32px;
+            margin-top: 60px; border-radius: 60px 60px 0 0; text-align: center;
+        }
+        .footer-wave h2 {
+            font-size: 2.6rem; font-weight: 800; margin-bottom: 8px;
+            display: flex; align-items: center; justify-content: center;
+            gap: 12px; flex-wrap: wrap;
+        }
+        .footer-wave h2 .spark {
+            width: 14px; height: 14px;
+            background: #f5a623;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .footer-wave p {
+            font-size: 1.25rem; font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .hero-text h1 { font-size: 2.4rem; }
+            .hero-text .welcome { font-size: 1rem; }
+            .hero-sub { font-size: 1.05rem; }
+            .logo-main { font-size: 2rem; }
+            .section-header h2 { font-size: 1.9rem; }
+            .footer-wave h2 { font-size: 2rem; }
+            .footer-wave p { font-size: 1rem; }
+            .hero { border-radius: 0 0 40px 40px; }
+        }
+        @media (max-width: 600px) {
+            .card { flex: 1 1 100%; max-width: 100%; }
+            .topic-card { flex: 1 1 45%; max-width: 100%; }
+        }
+        @media (max-width: 480px) {
+            .top-bar { flex-direction: column; align-items: flex-start; }
+            .hero-text h1 { font-size: 1.9rem; }
+            .topic-card { flex: 1 1 100%; }
+        }
+
+        .img-fallback {
+            background: #f0e8d0; border-radius: 20px;
+            display: flex; align-items: center; justify-content: center;
+            color: #8a7a5a; font-weight: 600; font-size: 0.75rem; padding: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container top-bar">
+        <div class="logo-area">
+            <div class="logo-main">
+                <span class="g">G</span><span class="m">M</span><span class="r">R</span><span class="c">C</span>
+            </div>
+            <div class="tagline">Matuto • Gawin • Maging Mabuti</div>
+        </div>
+    </div>
+
+    <section class="hero">
+        <div class="container hero-inner">
+            <div class="hero-text">
+                <div class="welcome">Maligayang pagdating sa GMRC!</div>
+                <h1>
+                    <span class="line1">Matuto,</span>
+                    <span class="line2">Gawin,</span>
+                    <span class="line3">Maging Mabuti!</span>
+                </h1>
+                <p class="hero-sub">
+                    Igalang ang sarili, ang iba, at ang ating komunidad.
+                </p>
+                <a href="aralin.html" class="btn-primary">
+                    Simulan <span style="font-size:1.2rem;"></span>
+                </a>
+            </div>
+            <div class="hero-image">
+                <img src="images/hero-kids.png" alt="Masasayang bata na nag-aaral"
+                     onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'img-fallback\' style=\'width:300px;height:220px;\'>hero-kids.png</div>';">
+            </div>
+        </div>
+    </section>
+
+    <section class="section container">
+        <div class="section-header">
+            <h2><span class="spark"></span> Explore GMRC <span class="spark"></span></h2>
+            <p>Pumili ng isang activity para matuto at magpraktis!</p>
+        </div>
+
+        <div class="card-grid">
+            <a href="aralin.html" class="card card-aralin">
+                <div class="card-icon-img">
+                    <img src="images/icon-lessons.png" alt="Aralin"
+                         onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'img-fallback\' style=\'width:80px;height:80px;\'>Lessons</div>';">
+                </div>
+                <h3>Mga Aralin</h3>
+                <p>Basahin at alamin ang mga aral sa GMRC.</p>
+                <span class="card-btn">Simulan</span>
+            </a>
+
+            <a href="laro.html" class="card card-laro">
+                <div class="card-icon-img">
+                    <img src="images/icon-games.png" alt="Laro"
+                         onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'img-fallback\' style=\'width:80px;height:80px;\'>Games</div>';">
+                </div>
+                <h3>Mga Laro</h3>
+                <p>Maglaro at matuto sa masayang paraan.</p>
+                <span class="card-btn green">Maglaro</span>
+            </a>
+
+            <a href="quiz.html" class="card card-quiz">
+                <div class="card-icon-img">
+                    <img src="images/icon-quiz.png" alt="Quiz"
+                         onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'img-fallback\' style=\'width:80px;height:80px;\'>Quiz</div>';">
+                </div>
+                <h3>Mga Quiz</h3>
+                <p>Sukatin ang natutunan mo sa bawat paksa.</p>
+                <span class="card-btn purple">Sumagot</span>
+            </a>
+
+            <a href="gawain.html" class="card card-gawain">
+                <div class="card-icon-img">
+                    <img src="images/icon-activities.png" alt="Gawain"
+                         onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'img-fallback\' style=\'width:80px;height:80px;\'>Activities</div>';">
+                </div>
+                <h3>Mga Gawain</h3>
+                <p>Ipakita ang mabubuting pag-uugali sa araw-araw.</p>
+                <span class="card-btn pink">Tingnan</span>
+            </a>
+        </div>
+    </section>
+
+    <section class="section container">
+        <div class="section-header">
+            <h2><span class="spark"></span> Mga Paksa sa GMRC <span class="spark"></span></h2>
+            <p>Tuklasin ang mga aralin para sa isang mas mabuting ikaw!</p>
+        </div>
+
+        <div class="topics-grid">
+            <div class="topic-card topic-sarili">
+                <div class="topic-icon">
+                    <img src="images/icon-self.png" alt="Sarili"
+                         onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'img-fallback\' style=\'width:70px;height:70px;\'>Self</div>';">
+                </div>
+                <h4>Sarili</h4>
+                <p>Pagmamahal sa sarili, pagiging responsable, at disiplina.</p>
+            </div>
+
+            <div class="topic-card topic-pamilya">
+                <div class="topic-icon">
+                    <img src="images/icon-family.png" alt="Pamilya"
+                         onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'img-fallback\' style=\'width:70px;height:70px;\'>Family</div>';">
+                </div>
+                <h4>Pamilya</h4>
+                <p>Paggalang, pagmamahal, at pagtutulungan sa pamilya.</p>
+            </div>
+
+            <div class="topic-card topic-paaralan">
+                <div class="topic-icon">
+                    <img src="images/icon-community.png" alt="Paaralan"
+                         onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'img-fallback\' style=\'width:70px;height:70px;\'>School</div>';">
+                </div>
+                <h4>Paaralan at Komunidad</h4>
+                <p>Pagtutulungan, paggalang, at pagiging mabuting mamamayan.</p>
+            </div>
+
+            <div class="topic-card topic-bansa">
+                <div class="topic-icon">
+                    <img src="images/icon-country.png" alt="Bansa"
+                         onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'img-fallback\' style=\'width:70px;height:70px;\'>Country</div>';">
+                </div>
+                <h4>Bansa</h4>
+                <p>Pagmamalasakit sa bansa at sa kapwa Pilipino.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer-wave">
+        <div class="container">
+            <h2><span class="spark"></span><span>GMRC</span><span class="spark"></span></h2>
+            <p>Para sa mas mabuting bayan!</p>
+        </div>
+    </footer>
+
+</body>
+</html>

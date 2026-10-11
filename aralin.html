@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mga Aralin · GMRC</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+            background-color: #fdfaef;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill='none' stroke='%23d9d4c4' stroke-width='0.8'%3E%3Cpath d='M0 0h40v40H0z'/%3E%3Cpath d='M0 10h40M0 20h40M0 30h40M10 0v40M20 0v40M30 0v40'/%3E%3C/g%3E%3C/svg%3E");
+            background-repeat: repeat;
+            color: #1e2b3c; line-height: 1.7;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+        .page-header {
+            background: #fffdf5;
+            padding: 20px 0;
+            border-bottom: 2px solid #e8e0cc;
+            position: sticky; top: 0; z-index: 10;
+        }
+        .page-header-inner {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 16px;
+        }
+        .back-btn {
+            text-decoration: none; color: #3a7bd5; font-weight: 600;
+            font-size: 1rem; transition: 0.2s;
+        }
+        .back-btn:hover { color: #1a5ba8; transform: translateX(-3px); }
+        .page-title-small { font-weight: 800; font-size: 1.4rem; }
+        .page-title-small .blue { color: #3a7bd5; }
+        .page-title-small .orange { color: #f5a623; }
+        .page-title-small .green { color: #5f9e3e; }
+        .page-title-small .purple { color: #7b4b9e; }
+
+        .lesson-hero {
+            background: #e2f0ff;
+            border-radius: 32px; padding: 40px 36px; margin: 32px 0 40px;
+            text-align: center;
+            border: 2px solid #c9e2ff;
+        }
+        .lesson-hero .badge {
+            display: inline-block; background: #3a7bd5; color: white;
+            font-weight: 700; font-size: 0.85rem; padding: 6px 18px;
+            border-radius: 40px; margin-bottom: 16px; letter-spacing: 0.5px;
+        }
+        .lesson-hero h1 {
+            font-size: 2.6rem; font-weight: 800; color: #1e2f4a;
+            line-height: 1.2; margin-bottom: 12px;
+        }
+        .lesson-hero p { color: #3e5670; font-size: 1.1rem; font-weight: 500; }
+
+        .lesson-section {
+            background: #fffdf5; border-radius: 24px; padding: 32px 36px;
+            margin-bottom: 24px; border: 2px solid #e8e0cc;
+            box-shadow: 0 8px 20px -12px rgba(80, 60, 20, 0.15);
+        }
+        .lesson-section h2 {
+            font-size: 1.6rem; font-weight: 800; color: #1e2f4a;
+            margin-bottom: 16px; display: flex; align-items: center; gap: 12px;
+        }
+        .lesson-section h2 .icon {
+            background: #e2f0ff; padding: 6px 14px; border-radius: 12px;
+            font-size: 1rem; color: #3a7bd5; font-weight: 800;
+        }
+        .lesson-section p { color: #2f4a6b; margin-bottom: 14px; font-size: 1.02rem; }
+        .lesson-section ul { list-style: none; padding-left: 0; margin: 14px 0; }
+        .lesson-section ul li {
+            padding: 10px 0 10px 32px; position: relative;
+            color: #2f4a6b; font-size: 1rem;
+        }
+        .lesson-section ul li::before {
+            content: ''; position: absolute; left: 6px; top: 18px;
+            width: 8px; height: 8px; background: #3a7bd5; border-radius: 50%;
+        }
+
+        /* ---- VIDEO WRAPPER ---- */
+        .video-wrapper {
+            background: #f0e6fa;
+            border: 2px solid #c0a8e0;
+            border-radius: 20px;
+            padding: 14px;
+            margin-top: 16px;
+        }
+        .video-wrapper video {
+            width: 100%;
+            height: auto;
+            border-radius: 14px;
+            display: block;
+            background: #000;
+        }
+
+        .value-card {
+            border-radius: 20px;
+            padding: 26px 26px 22px;
+            margin-bottom: 18px;
+            position: relative;
+            border: 2px solid;
+        }
+        .value-card .value-num {
+            position: absolute;
+            top: 16px; right: 22px;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800;
+            font-size: 1rem;
+            color: white;
+        }
+        .value-card h3 {
+            font-size: 1.2rem; font-weight: 700; color: #1e2f4a;
+            margin-bottom: 10px; padding-right: 48px;
+        }
+        .value-card p {
+            color: #2f4a6b; font-size: 0.98rem; margin-bottom: 14px;
+        }
+        .value-card .halimbawa {
+            font-size: 0.9rem;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 12px;
+            line-height: 1.55;
+            color: #4a3a1a;
+        }
+        .value-card .halimbawa strong {
+            display: block;
+            margin-bottom: 3px;
+            font-size: 0.78rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* Individual colors */
+        .value-card.c1 { background: #e2f0ff; border-color: #a8d0ff; }
+        .value-card.c1 .value-num { background: #3a7bd5; }
+        .value-card.c1 .halimbawa strong { color: #1a5ba8; }
+
+        .value-card.c2 { background: #fff8e1; border-color: #ffdd8a; }
+        .value-card.c2 .value-num { background: #f5a623; }
+        .value-card.c2 .halimbawa strong { color: #8a6a00; }
+
+        .value-card.c3 { background: #e4f5e0; border-color: #a8d99e; }
+        .value-card.c3 .value-num { background: #5f9e3e; }
+        .value-card.c3 .halimbawa strong { color: #3e7a22; }
+
+        .value-card.c4 { background: #ffe6ee; border-color: #ffb8cd; }
+        .value-card.c4 .value-num { background: #e96a8e; }
+        .value-card.c4 .halimbawa strong { color: #c04a6e; }
+
+        .value-card.c5 { background: #f0e6fa; border-color: #d0b8e8; }
+        .value-card.c5 .value-num { background: #7b4b9e; }
+        .value-card.c5 .halimbawa strong { color: #5a3575; }
+
+        .highlight-box {
+            background: #fff8e1; border-radius: 20px; padding: 28px 32px;
+            margin: 24px 0; border: 2px solid #f0d88a;
+            position: relative;
+        }
+        .highlight-box::before {
+            content: 'TANDAAN';
+            position: absolute;
+            top: -12px; left: 28px;
+            background: #f5a623; color: white;
+            font-size: 0.72rem; font-weight: 800;
+            letter-spacing: 1px;
+            padding: 3px 12px;
+            border-radius: 20px;
+        }
+        .highlight-box p {
+            font-size: 1.1rem; font-weight: 600; color: #5a4300;
+            font-style: italic; line-height: 1.6;
+        }
+
+        .btn-cta {
+            display: block; width: 100%; text-align: center;
+            background: #6a4c9c; color: white; font-weight: 700;
+            padding: 18px; border-radius: 50px; text-decoration: none;
+            font-size: 1.1rem; margin: 40px 0;
+            transition: 0.2s;
+            border: 2px solid #6a4c9c;
+        }
+        .btn-cta:hover { background: #5a3d85; transform: translateY(-2px); }
+
+        @media (max-width: 600px) {
+            .lesson-hero { padding: 28px 20px; }
+            .lesson-hero h1 { font-size: 1.9rem; }
+            .lesson-section { padding: 24px 20px; }
+            .value-card { padding: 22px 20px 18px; }
+            .value-card .value-num { top: 14px; right: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-header">
+        <div class="container page-header-inner">
+            <a href="index.html" class="back-btn">Bumalik sa Home</a>
+            <div class="page-title-small">
+                <span class="blue">G</span><span class="orange">M</span><span class="green">R</span><span class="purple">C</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="lesson-hero">
+            <div class="badge">MGA ARALIN</div>
+            <h1>Pag-aaral tungkol sa GMRC</h1>
+            <p>Alamin ang kahalagahan ng mabuting asal at tamang pag-uugali.</p>
+        </div>
+
+        <div class="lesson-section">
+            <h2><span class="icon">A</span> Ano ang GMRC?</h2>
+            <p>Ang <strong>GMRC (Good Manners and Right Conduct)</strong> ay isang asignatura na nagtuturo sa mga mag-aaral ng mabuting asal, tamang pag-uugali, paggalang, at pagpapahalaga sa sarili at sa ibang tao. Tinutulungan nito ang mga bata na maging responsable at mabuting miyembro ng pamilya, paaralan, at komunidad.</p>
+            <p>Sa pamamagitan ng GMRC, natututuhan ng mga mag-aaral kung paano gumawa ng mabubuting desisyon, makitungo nang maayos sa kapwa, at isabuhay ang mga positibong pagpapahalaga sa araw-araw.</p>
+        </div>
+
+        <div class="lesson-section">
+            <h2><span class="icon">V</span> Video: Ano ang GMRC?</h2>
+            <p>Panoorin ang maikling video na ito upang mas maintindihan ang kahalagahan ng GMRC.</p>
+
+            <div class="video-wrapper">
+                <video controls preload="metadata">
+                    <source src="videos/gmrc-intro.mp4" type="video/mp4">
+                    Ang iyong browser ay hindi sumusuporta sa video tag.
+                </video>
+            </div>
+        </div>
+
+        <div class="lesson-section">
+            <h2><span class="icon">B</span> Mga Layunin ng GMRC</h2>
+            <p>Pagkatapos basahin ang aralin, ang mga mag-aaral ay inaasahang:</p>
+            <ul>
+                <li>Maipaliwanag ang kahalagahan ng mabuting asal.</li>
+                <li>Maipakita ang paggalang sa sarili at sa ibang tao.</li>
+                <li>Makilala ang pagkakaiba ng tama at maling pag-uugali.</li>
+                <li>Maisabuhay ang pagiging matapat, responsable, at matulungin.</li>
+            </ul>
+        </div>
+
+        <div class="lesson-section">
+            <h2><span class="icon">C</span> Mga Pangunahing Pagpapahalaga sa GMRC</h2>
+
+            <div class="value-card c1">
+                <span class="value-num">1</span>
+                <h3>Paggalang (Respect)</h3>
+                <p>Ang paggalang ay pagpapakita ng pagkilala sa damdamin, karapatan, at pagkatao ng ibang tao.</p>
+                <div class="halimbawa">
+                    <strong>Halimbawa</strong>
+                    Paggamit ng "po" at "opo" kapag nakikipag-usap sa nakatatanda at pakikinig kapag may nagsasalita.
+                </div>
+            </div>
+
+            <div class="value-card c2">
+                <span class="value-num">2</span>
+                <h3>Katapatan (Honesty)</h3>
+                <p>Ang katapatan ay pagsasabi ng totoo at pag-amin sa sariling pagkakamali.</p>
+                <div class="halimbawa">
+                    <strong>Halimbawa</strong>
+                    Pagsasauli ng bagay na napulot at pagsasabi ng totoo sa magulang o guro.
+                </div>
+            </div>
+
+            <div class="value-card c3">
+                <span class="value-num">3</span>
+                <h3>Pananagutan (Responsibility)</h3>
+                <p>Ang pananagutan ay pagtupad sa mga tungkulin at pagtanggap sa resulta ng sariling mga kilos.</p>
+                <div class="halimbawa">
+                    <strong>Halimbawa</strong>
+                    Paggawa ng takdang-aralin at pag-aayos ng sariling gamit.
+                </div>
+            </div>
+
+            <div class="value-card c4">
+                <span class="value-num">4</span>
+                <h3>Kabaitan (Kindness)</h3>
+                <p>Ang kabaitan ay pagpapakita ng malasakit at pagtulong sa ibang tao.</p>
+                <div class="halimbawa">
+                    <strong>Halimbawa</strong>
+                    Pagtulong sa kaklaseng nahihirapan at pakikitungo nang maayos sa lahat.
+                </div>
+            </div>
+
+            <div class="value-card c5">
+                <span class="value-num">5</span>
+                <h3>Disiplina (Discipline)</h3>
+                <p>Ang disiplina ay pagsunod sa mga alituntunin at pagkontrol sa sariling kilos.</p>
+                <div class="halimbawa">
+                    <strong>Halimbawa</strong>
+                    Pagsunod sa mga tuntunin sa paaralan at pagpila nang maayos.
+                </div>
+            </div>
+        </div>
+
+        <div class="lesson-section">
+            <h2><span class="icon">D</span> Bakit Mahalaga ang GMRC?</h2>
+            <p>Mahalaga ang GMRC dahil tinutulungan nito ang mga mag-aaral na:</p>
+            <ul>
+                <li>Maging magalang at mabait sa kapwa.</li>
+                <li>Makabuo ng magandang ugnayan sa pamilya at mga kaibigan.</li>
+                <li>Matutong gumawa ng tamang desisyon.</li>
+                <li>Maging responsable sa kanilang mga tungkulin.</li>
+                <li>Makatulong sa pagbuo ng mapayapa at maayos na komunidad.</li>
+            </ul>
+        </div>
+
+        <div class="highlight-box">
+            <p>"Ang mabuting asal ay hindi lamang sinasabi, kundi isinasagawa sa araw-araw."</p>
+            <p style="font-size:0.95rem; font-weight:500; color:#7a5a00; margin-top:12px; font-style:normal;">
+                Ang bawat mabuting kilos, gaano man ito kaliit, ay maaaring makatulong upang maging mas maayos at masaya ang ating paligid.
+            </p>
+        </div>
+
+        <a href="quiz.html" class="btn-cta">Sagutin ang mga Tanong</a>
+
+    </div>
+
+</body>
+</html>
